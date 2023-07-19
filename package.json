@@ -1,0 +1,17 @@
+{
+  "name": "background-task",
+  "version": "1.0.0",
+  "description": "Background task",
+  "main": "electron.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Ronielli",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^25.3.0"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  }
+}

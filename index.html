@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aplicativo Electron</title>
+</head>
+<body>
+  <h1>Aplicativo Electron</h1>
+  <p id="counter">0</p>
+
+  <script src="./preload.js"></script>
+  <script>
+    // Atualizar o contador na interface
+    function updateCounter(count) {
+      document.getElementById('counter').innerText = count;
+    }
+
+    // Receber atualizações do contador do processo principal
+    setInterval(() => {
+      const count = window.electronAPI.getCounter();
+      updateCounter(count);
+    }, 1000);
+  </script>
+</body>
+</html>
