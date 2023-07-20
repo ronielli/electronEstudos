@@ -1,5 +1,15 @@
 const { app, BrowserWindow, Tray, Menu, ipcMain } = require('electron');
 const path = require('path');
+const { exec } = require('child_process');
+const isWindowsStartup = process.argv.slice(1).some(arg => arg === '--startup');
+
+
+
+if (require('electron-squirrel-startup')) {
+  // Se for o caso, encerre o aplicativo, pois a tarefa de registro foi tratada
+  app.quit();
+}
+
 
 let mainWindow;
 let tray;
@@ -46,6 +56,7 @@ function createWindow() {
 
 app.whenReady().then(createWindow);
 
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
@@ -70,3 +81,28 @@ setInterval(() => {
 ipcMain.on('get-counter', (event) => {
   event.returnValue = count;
 });
+
+
+function addToWindowsStartup() {
+
+  const electronAppPath =  path.resolve("background-task.exe")
+
+  const registryKeyName = 'background-task';
+
+  console.log(electronAppPath)
+  
+  const addRegistryEntryCommand = `REG ADD HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v ${registryKeyName} /t REG_SZ /d "${electronAppPath}" /f`;
+  
+  exec(addRegistryEntryCommand, (error, stdout, stderr) => {
+    if (error) {
+      console.error('Erro ao adicionar a entrada no Registro:', error);
+    } else {
+      console.log('Entrada adicionada no Registro com sucesso!');
+    }
+  });
+}
+
+if (!isWindowsStartup) {
+ 
+  addToWindowsStartup();
+}

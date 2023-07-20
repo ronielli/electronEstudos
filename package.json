@@ -4,14 +4,19 @@
   "description": "Background task",
   "main": "electron.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "builder": "electron-builder -w",
+    "start-windows": "electron . --startup",
+    "postinstall": "electron-squirrel-startup"
   },
   "author": "Ronielli",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^25.3.0"
+    "electron": "^25.3.0",
+    "electron-builder": "^24.4.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "regedit": "^5.1.2"
   }
 }
